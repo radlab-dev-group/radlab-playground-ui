@@ -1,0 +1,5 @@
+streamlit
+
+# If exception with streamlit: streamlit has not `logo` use this version:
+# streamlit==1.44.0
+plotly
