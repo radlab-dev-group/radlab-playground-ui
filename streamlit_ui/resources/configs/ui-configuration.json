@@ -1,0 +1,56 @@
+{
+  "modules": {
+    "public_chat_conversation": {
+      "host": "http://192.168.100.79:8567",
+      "ep": {
+        "new_chat": "api/public/new_chat",
+        "save_chat": "api/public/save_chat",
+        "add_chat_message": "api/public/add_chat_message",
+        "get_chat_by_hash": "api/public/get_chat_by_hash",
+        "conversation_models": "api/public/conversation_models"
+      }
+    },
+    "public_news_stream": {
+      "host": "http://192.168.100.79:8567",
+      "ep": {
+        "get_categories": "api/public/news_categories",
+        "get_categories_with_pages": "api/public/news_categories_with_pages",
+        "get_last_news": "api/public/last_news",
+        "last_days_summarizer": "api/public/last_days_summarizer",
+        "do_news_action": "api/auth/do_news_action",
+        "news_statistics_public": "api/public/last_statistics",
+        "search_news_in_categories": "api/public/search_news"
+      }
+    },
+    "public_news_browser": {
+      "host": "http://192.168.100.79:8567",
+      "ep": {
+        "articles_summary_of_day": "api/public/articles_summary_of_day"
+      }
+    },
+    "public_news_creator": {
+      "host": "http://192.168.100.79:8567",
+      "ep": {
+        "generate_article_from_search": "api/public/generate_article_from_search"
+      }
+    },
+    "authorization": {
+      "host": "http://192.168.100.79:8567",
+      "ep": {
+        "get_login_url": "api/login_url",
+        "login": "api/login",
+        "logout": "api/logout",
+        "refresh_token": "api/refresh_token"
+      }
+    },
+    "administration": {
+      "host": "http://192.168.100.79:8567",
+      "ep": {
+        "system_status": "api/auth/admin_system_status",
+        "news_statistics": "api/auth/admin_news_statistics",
+        "do_admin_action_on_module": "api/auth/do_admin_action_on_module",
+        "last_news_to_check": "api/auth/last_news_to_check_correctness"
+      }
+    }
+  }
+}
