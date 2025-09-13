@@ -10,6 +10,7 @@ from src.api_public import (
     PlaygroundAuthenticationAPI,
     PlaygroundAdministrationAPI,
 )
+from src.token_utils import TokenValidator
 from src.ui_utils_public import show_admin_window, initialize_page
 
 AUTH_QUERY_PARAMS = ["state", "session_state", "iss", "code"]
@@ -70,6 +71,11 @@ def main():
         SessionConfig.set_session_auth_token_full_response(full_info=token)
 
     if token_str is not None and len(token_str):
+        _tv = TokenValidator()
+        if not _tv.validate_token_string(token_str=token_str):
+            st.error("Token is not valid")
+            return
+
         admin_api = PlaygroundAdministrationAPI(config_path=DEFAULT_UI_CONFIG_PATH)
         system_status = admin_api.get_system_status(
             token_str=token_str,
