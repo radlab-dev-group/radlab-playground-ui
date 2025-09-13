@@ -1,5 +1,6 @@
 import streamlit as st
 
+from src.token_utils import TokenValidator
 from src.language import LanguageTranslator
 from src.session_config import SessionConfig
 from src.constants import DEFAULT_UI_CONFIG_PATH
@@ -29,6 +30,12 @@ def main():
 
     if token_info is None:
         token_str = None
+
+    if token_str is not None:
+        _tv = TokenValidator()
+        if not _tv.validate_token_string(token_str=token_str):
+            st.error("Token is not valid")
+            return
 
     p_ns_api = PublicNewsStreamAPI(
         config_path=DEFAULT_UI_CONFIG_PATH,
