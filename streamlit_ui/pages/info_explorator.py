@@ -18,7 +18,7 @@ def show_info(elem):
 
     # yesterday = datetime.datetime.today() - datetime.timedelta(days=1, hours=3)
     # yesterday_str = yesterday.strftime("%d.%m.%Y")
-    yesterday_str = "28.06.2025"
+    yesterday_str = "23.09.2025"
 
     tab_general.info(
         LanguageTranslator.translate(
