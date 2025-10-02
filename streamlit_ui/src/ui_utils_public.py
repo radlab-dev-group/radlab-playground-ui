@@ -24,6 +24,7 @@ from src.constants import (
     ICON_FLAG_FR_LANG,
     ICON_FLAG_RU_LANG,
     ICON_FLAG_UA_LANG,
+    ICON_FLAG_DE_LANG,
     PLI_DESC_ICONS2VALUE,
     ICON_NEWS_PLI_GOOD,
     ICON_DEFAULT_VALUE_UI,
@@ -582,6 +583,8 @@ def convert_to_lang_icon(language: str | None) -> str:
         return ICON_FLAG_RU_LANG
     elif language == "ua":
         return ICON_FLAG_UA_LANG
+    elif language == "de":
+        return ICON_FLAG_DE_LANG
     return ICON_DEFAULT_VALUE_UI
 
 
