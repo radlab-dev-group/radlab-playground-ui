@@ -31,6 +31,7 @@ from src.constants import (
     DEF_PLI_VALUE_TO_ICON,
     MIN_ARTICLE_LEN,
     DEFAULT_LANGUAGE,
+    MIN_STREAM_QUERY_LEN,
 )
 from src.data_utils import (
     prepare_news_to_user,
@@ -829,31 +830,34 @@ def prepare_news_stream_public_news_tab(
     :param filter_pages:
     :return:
     """
-    # phr_search_inp_tab, btn_search_tab = st.columns([7, 1])
-    # if (
-    #     user_token is not None
-    #     and len(user_token.strip())
-    #     and publ_news_api is not None
-    # ):
-    #     phrase_to_search = phr_search_inp_tab.text_input(
-    #         label="Szukaj",
-    #         placeholder=f"Podaj frazę do wyszukania w wybranych stronach (ostatnie 24h)",
-    #         max_chars=128,
-    #         label_visibility="collapsed",
-    #         on_change=None,
-    #     )
-    #     search_btn = btn_search_tab.button(":mag_right:")
-    #     if search_btn:
-    #         if len(phrase_to_search.strip()) < 5:
-    #             st.error(f"Musisz wpisać frazę do wyszukania (min 5 znaków)!")
-    #             # return
-    #         elif publ_news_api is not None:
-    #             search_n_in_cat = publ_news_api.search_news_in_categories(
-    #                 text_to_search=phrase_to_search,
-    #                 filter_pages=filter_pages,
-    #                 num_of_results=number_of_news,
-    #             )
-    #             news_in_categories = search_n_in_cat
+    phr_search_inp_tab = st.container()
+
+    last_days = 3
+    phrase_to_search = phr_search_inp_tab.chat_input(
+        placeholder=f"Podaj frazę do wyszukania w wybranych "
+        f"stronach (ostatnie {last_days * 24}h)",
+        max_chars=128,
+    )
+
+    if phrase_to_search and publ_news_api:
+        if len(phrase_to_search.strip()) < MIN_STREAM_QUERY_LEN:
+            st.warning(
+                f"Zapytanie musi posiadać co majmniej {MIN_STREAM_QUERY_LEN} znaków"
+            )
+        phr_search_inp_tab.write(phrase_to_search)
+
+        with st.spinner("Wyszukiwanie...", show_time=True):
+            search_n_in_cat = publ_news_api.search_news_in_categories(
+                text_to_search=phrase_to_search,
+                filter_pages=filter_pages,
+                num_of_results=number_of_news,
+                last_days=last_days,
+            )
+            news_in_categories = search_n_in_cat.get("search_result")
+
+        if not news_in_categories:
+            st.info("Problem z połączeniem, spróbuj jeszcze raz")
+            return
 
     c_names = [c for c in categories.keys()]
     c_names_display = [
@@ -862,7 +866,7 @@ def prepare_news_stream_public_news_tab(
     news_tabs = st.tabs(c_names_display)
     for idx, c_name in enumerate(c_names):
         with news_tabs[idx]:
-            st.subheader(categories[c_name]["category_info"]["description"])
+            # st.subheader(categories[c_name]["category_info"]["description"])
             if c_name not in news_in_categories:
                 continue
             news_in_cat = news_in_categories[c_name]
