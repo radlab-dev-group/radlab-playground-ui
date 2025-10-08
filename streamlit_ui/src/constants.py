@@ -79,6 +79,8 @@ REPLACE_FOR_TRANSLATIONS = {
     "{ICON_NEWS_PLI_GOOD}": ICON_NEWS_PLI_GOOD,
 }
 
+MIN_STREAM_QUERY_LEN = 12
+
 
 class ApplicationIcons:
     # App icons
