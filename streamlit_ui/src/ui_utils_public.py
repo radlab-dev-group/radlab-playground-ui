@@ -804,6 +804,42 @@ def add_news_to_public_news_stream(
             full_news_text.write(news_text)
 
 
+class NewsStreamMockQuestions:
+    PREDEFINED_QUESTION_1 = {
+        "pl": "Wypadki i zdarzenia na drogach w Polsce",
+        "en": "",
+    }
+    PREDEFINED_QUESTION_2 = {"pl": "Aktualna pogoda w Polsce", "en": ""}
+    PREDEFINED_QUESTION_3 = {"pl": "Zmiany w polskim prawie", "en": ""}
+    PREDEFINED_QUESTION_4 = {"pl": "Informacje o kryptowalutach", "en": ""}
+    PREDEFINED_QUESTION_5 = {
+        "pl": "Drony i zagrożenie przestrzeni powietrznej",
+        "en": "",
+    }
+    PREDEFINED_QUESTION_6 = {
+        "pl": "Rozwój sztucznej inteligencji i technologii",
+        "en": "",
+    }
+    PREDEFINED_QUESTION_7 = {"pl": "Informacje dla emerytów i rencistów", "en": ""}
+    PREDEFINED_QUESTION_8 = {
+        "pl": "Wydarzenia sportowe, wyniki, rozgrywki",
+        "en": "",
+    }
+    PREDEFINED_QUESTION_9 = {"pl": "Życie polskich gwiazd telewizyjnych", "en": ""}
+
+    PREDEFINED_QUESTIONS = [
+        PREDEFINED_QUESTION_4,
+        PREDEFINED_QUESTION_2,
+        PREDEFINED_QUESTION_3,
+        PREDEFINED_QUESTION_7,
+        PREDEFINED_QUESTION_9,
+        PREDEFINED_QUESTION_8,
+        PREDEFINED_QUESTION_6,
+        PREDEFINED_QUESTION_1,
+        PREDEFINED_QUESTION_5,
+    ]
+
+
 def prepare_news_stream_public_news_tab(
     categories,
     news_in_categories,
@@ -833,10 +869,19 @@ def prepare_news_stream_public_news_tab(
     phr_search_inp_tab = st.container()
 
     last_days = 3
-    phrase_to_search = phr_search_inp_tab.chat_input(
+    language = SessionConfig.get_session_ui_language() or DEFAULT_LANGUAGE
+    predefined_questions = [
+        q[language] for q in NewsStreamMockQuestions.PREDEFINED_QUESTIONS
+    ]
+
+    phrase_to_search = phr_search_inp_tab.selectbox(
+        "Your question",
+        options=predefined_questions,
+        label_visibility="hidden",
+        index=None,
         placeholder=f"Podaj frazę do wyszukania w wybranych "
         f"stronach (ostatnie {last_days * 24}h)",
-        max_chars=128,
+        accept_new_options=True,
     )
 
     if phrase_to_search and publ_news_api:
@@ -844,7 +889,7 @@ def prepare_news_stream_public_news_tab(
             st.warning(
                 f"Zapytanie musi posiadać co majmniej {MIN_STREAM_QUERY_LEN} znaków"
             )
-        phr_search_inp_tab.write(phrase_to_search)
+        phr_search_inp_tab.write(f"#### {phrase_to_search}")
 
         with st.spinner("Wyszukiwanie...", show_time=True):
             search_n_in_cat = publ_news_api.search_news_in_categories(
