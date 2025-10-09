@@ -892,6 +892,7 @@ def prepare_news_stream_public_news_tab(
             st.warning(
                 f"Zapytanie musi posiadać co majmniej {MIN_STREAM_QUERY_LEN} znaków"
             )
+            return
         phr_search_inp_tab.write(f"#### {phrase_to_search}")
 
         with st.spinner("Wyszukiwanie...", show_time=True):
