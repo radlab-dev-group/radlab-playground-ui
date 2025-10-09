@@ -827,6 +827,12 @@ class NewsStreamMockQuestions:
     }
     PREDEFINED_QUESTION_9 = {"pl": "Życie polskich gwiazd telewizyjnych", "en": ""}
     PREDEFINED_QUESTION_10 = {"pl": "Informacje ze świata kosmosu", "en": ""}
+    PREDEFINED_QUESTION_11 = {"pl": "Ministerstwo Edukacji i szkolnictwo", "en": ""}
+    PREDEFINED_QUESTION_12 = {
+        "pl": "Informacje związane z polityką Polską",
+        "en": "",
+    }
+    PREDEFINED_QUESTION_13 = {"pl": "Międzynarodowe układy polityczne", "en": ""}
 
     PREDEFINED_QUESTIONS = [
         PREDEFINED_QUESTION_10,
@@ -835,10 +841,13 @@ class NewsStreamMockQuestions:
         PREDEFINED_QUESTION_3,
         PREDEFINED_QUESTION_7,
         PREDEFINED_QUESTION_9,
+        PREDEFINED_QUESTION_12,
         PREDEFINED_QUESTION_8,
         PREDEFINED_QUESTION_6,
+        PREDEFINED_QUESTION_11,
         PREDEFINED_QUESTION_1,
         PREDEFINED_QUESTION_5,
+        PREDEFINED_QUESTION_13,
     ]
 
 
