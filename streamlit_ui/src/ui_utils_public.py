@@ -826,8 +826,10 @@ class NewsStreamMockQuestions:
         "en": "",
     }
     PREDEFINED_QUESTION_9 = {"pl": "Życie polskich gwiazd telewizyjnych", "en": ""}
+    PREDEFINED_QUESTION_10 = {"pl": "Informacje ze świata kosmosu", "en": ""}
 
     PREDEFINED_QUESTIONS = [
+        PREDEFINED_QUESTION_10,
         PREDEFINED_QUESTION_4,
         PREDEFINED_QUESTION_2,
         PREDEFINED_QUESTION_3,
@@ -871,7 +873,8 @@ def prepare_news_stream_public_news_tab(
     last_days = 3
     language = SessionConfig.get_session_ui_language() or DEFAULT_LANGUAGE
     predefined_questions = [
-        q[language] for q in NewsStreamMockQuestions.PREDEFINED_QUESTIONS
+        q[language] if q[language] else q[DEFAULT_LANGUAGE]
+        for q in NewsStreamMockQuestions.PREDEFINED_QUESTIONS
     ]
 
     phrase_to_search = phr_search_inp_tab.selectbox(
