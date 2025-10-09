@@ -879,7 +879,7 @@ def prepare_news_stream_public_news_tab(
         options=predefined_questions,
         label_visibility="hidden",
         index=None,
-        placeholder=f"Podaj frazę do wyszukania w wybranych "
+        placeholder=f"Wybierz lub podaj frazę do wyszukania w wybranych "
         f"stronach (ostatnie {last_days * 24}h)",
         accept_new_options=True,
     )
