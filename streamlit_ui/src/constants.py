@@ -33,31 +33,6 @@ ICON_NEWS_PLI_BAD = ":red_circle:"
 ICON_NEWS_PLI_NORM = ":large_yellow_circle:"
 ICON_NEWS_PLI_GOOD = ":large_green_circle:"
 
-DEF_PLI_VALUE_TO_ICON = [
-    {
-        "below_value": 0.0,
-        "icon": ICON_DEFAULT_VALUE_UI,
-        "text": f"{ICON_DEFAULT_VALUE_UI} wszystkie",
-    },
-    {
-        "below_value": 0.301,
-        "icon": ICON_NEWS_PLI_BAD,
-        "text": f"{ICON_NEWS_PLI_BAD} język skomplikowany",
-    },
-    {
-        "below_value": 0.701,
-        "icon": ICON_NEWS_PLI_NORM,
-        "text": f"{ICON_NEWS_PLI_NORM} treści zrozumiałe",
-    },
-    {
-        "below_value": 1.01,
-        "icon": ICON_NEWS_PLI_GOOD,
-        "text": f"{ICON_NEWS_PLI_GOOD} bardzo prosty język",
-    },
-]
-PLI_DESC_ICONS2VALUE = {p["text"]: p["below_value"] for p in DEF_PLI_VALUE_TO_ICON}
-PLI_VALUE_ICONS2ICON = {p["below_value"]: p["icon"] for p in DEF_PLI_VALUE_TO_ICON}
-
 MIN_ARTICLE_LEN = 130
 
 # Definitions used while translation, the single text occurrence
