@@ -25,14 +25,14 @@ from src.constants import (
     ICON_FLAG_RU_LANG,
     ICON_FLAG_UA_LANG,
     ICON_FLAG_DE_LANG,
-    PLI_DESC_ICONS2VALUE,
-    ICON_NEWS_PLI_GOOD,
     ICON_DEFAULT_VALUE_UI,
-    DEF_PLI_VALUE_TO_ICON,
     MIN_ARTICLE_LEN,
     DEFAULT_LANGUAGE,
     MIN_STREAM_QUERY_LEN,
 )
+
+from src.definitions import prepare_pli_icons, ICON_NEWS_PLI_GOOD
+
 from src.data_utils import (
     prepare_news_to_user,
     convert_admin_pages_stats_news_p_day,
@@ -415,7 +415,9 @@ def prepare_news_stream_params_public(
         ],
     )
 
-    pli_icons = [i for i in PLI_DESC_ICONS2VALUE.keys()]
+    def_pli_ico, pli_ico2v, pli_v2ico = prepare_pli_icons()
+
+    pli_icons = [i for i in pli_ico2v.keys()]
     pli_icon_selected = filter_options.radio(
         LanguageTranslator.translate(code_name="news_stream_filter_news_pli_value"),
         pli_icons,
@@ -425,7 +427,7 @@ def prepare_news_stream_params_public(
         pli_to = 1.01
     else:
         pli_from, pli_to, ico_to_write_pli = convert_pli_value_to_icon(
-            PLI_DESC_ICONS2VALUE[pli_icon_selected] - 0.001
+            pli_ico2v[pli_icon_selected] - 0.001
         )
 
     cat_www_exp = news_config_container.expander(
@@ -462,7 +464,10 @@ def prepare_news_stream_params_public(
 
 def convert_pli_value_to_icon(pli_value) -> (float, float, str):
     prev_pli_conv = {"below_value": 0, "icon": ICON_NOT_SET_NEWS_INFO}
-    for pli_conv in DEF_PLI_VALUE_TO_ICON:
+
+    def_pli_icons, pli_ico2v, pli_v2ico = prepare_pli_icons()
+
+    for pli_conv in def_pli_icons:
         if pli_value < pli_conv["below_value"]:
             return (
                 prev_pli_conv["below_value"],
@@ -470,7 +475,7 @@ def convert_pli_value_to_icon(pli_value) -> (float, float, str):
                 pli_conv["icon"],
             )
         prev_pli_conv = pli_conv
-    return 0, 1.0, ICON_NEWS_PLI_GOOD
+    return 0.0, 1.0, ICON_NEWS_PLI_GOOD
 
 
 def prepare_admin_messages_to_article(
@@ -826,17 +831,28 @@ class NewsStreamMockQuestions:
         "en": "",
     }
     PREDEFINED_QUESTION_9 = {"pl": "Życie polskich gwiazd telewizyjnych", "en": ""}
+    PREDEFINED_QUESTION_10 = {"pl": "Informacje ze świata kosmosu", "en": ""}
+    PREDEFINED_QUESTION_11 = {"pl": "Ministerstwo Edukacji i szkolnictwo", "en": ""}
+    PREDEFINED_QUESTION_12 = {
+        "pl": "Informacje związane z polityką Polską",
+        "en": "",
+    }
+    PREDEFINED_QUESTION_13 = {"pl": "Międzynarodowe układy polityczne", "en": ""}
 
     PREDEFINED_QUESTIONS = [
+        PREDEFINED_QUESTION_10,
         PREDEFINED_QUESTION_4,
         PREDEFINED_QUESTION_2,
         PREDEFINED_QUESTION_3,
         PREDEFINED_QUESTION_7,
         PREDEFINED_QUESTION_9,
+        PREDEFINED_QUESTION_12,
         PREDEFINED_QUESTION_8,
         PREDEFINED_QUESTION_6,
+        PREDEFINED_QUESTION_11,
         PREDEFINED_QUESTION_1,
         PREDEFINED_QUESTION_5,
+        PREDEFINED_QUESTION_13,
     ]
 
 
@@ -871,7 +887,8 @@ def prepare_news_stream_public_news_tab(
     last_days = 3
     language = SessionConfig.get_session_ui_language() or DEFAULT_LANGUAGE
     predefined_questions = [
-        q[language] for q in NewsStreamMockQuestions.PREDEFINED_QUESTIONS
+        q[language] if q[language] else q[DEFAULT_LANGUAGE]
+        for q in NewsStreamMockQuestions.PREDEFINED_QUESTIONS
     ]
 
     phrase_to_search = phr_search_inp_tab.selectbox(
@@ -889,6 +906,7 @@ def prepare_news_stream_public_news_tab(
             st.warning(
                 f"Zapytanie musi posiadać co majmniej {MIN_STREAM_QUERY_LEN} znaków"
             )
+            return
         phr_search_inp_tab.write(f"#### {phrase_to_search}")
 
         with st.spinner("Wyszukiwanie...", show_time=True):
