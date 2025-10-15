@@ -891,25 +891,33 @@ def prepare_news_stream_public_news_tab(
         for q in NewsStreamMockQuestions.PREDEFINED_QUESTIONS
     ]
 
+    num_hours = last_days * 24
+
     phrase_to_search = phr_search_inp_tab.selectbox(
         "Your question",
         options=predefined_questions,
         label_visibility="hidden",
         index=None,
-        placeholder=f"Wybierz lub podaj frazę do wyszukania w wybranych "
-        f"stronach (ostatnie {last_days * 24}h)",
+        placeholder=LanguageTranslator.translate(
+            code_name="stream_search_phrase"
+        ).replace("{num_hours}", str(num_hours)),
         accept_new_options=True,
     )
 
     if phrase_to_search and publ_news_api:
         if len(phrase_to_search.strip()) < MIN_STREAM_QUERY_LEN:
             st.warning(
-                f"Zapytanie musi posiadać co majmniej {MIN_STREAM_QUERY_LEN} znaków"
+                LanguageTranslator.translate(
+                    code_name="stream_search_to_short_phrase"
+                ).replace("{MIN_STREAM_QUERY_LEN}", str(MIN_STREAM_QUERY_LEN)),
             )
             return
         phr_search_inp_tab.write(f"#### {phrase_to_search}")
 
-        with st.spinner("Wyszukiwanie...", show_time=True):
+        with st.spinner(
+            LanguageTranslator.translate(code_name="stream_searching"),
+            show_time=True,
+        ):
             search_n_in_cat = publ_news_api.search_news_in_categories(
                 text_to_search=phrase_to_search,
                 filter_pages=filter_pages,
@@ -919,7 +927,9 @@ def prepare_news_stream_public_news_tab(
             news_in_categories = search_n_in_cat.get("search_result")
 
         if not news_in_categories:
-            st.info("Problem z połączeniem, spróbuj jeszcze raz")
+            st.info(
+                LanguageTranslator.translate(code_name="stream_searching_problem")
+            )
             return
 
     c_names = [c for c in categories.keys()]
