@@ -684,7 +684,7 @@ def add_news_to_public_news_stream(
                     sim_to_original_article=sim_to_original_article,
                     num_of_generated_news=num_of_generated_news,
                     language=news["language"],
-                    main_page_language=main_page_language_ico,
+                    main_page_language=news["main_page_language"],
                     min_article_len=MIN_ARTICLE_LEN,
                 )
             else:
@@ -754,7 +754,7 @@ def add_news_to_public_news_stream(
                 sim_to_original_article=sim_to_original_article,
                 num_of_generated_news=num_of_generated_news,
                 language=news["language"],
-                main_page_language=main_page_language_ico,
+                main_page_language=news["main_page_language"],
                 min_article_len=MIN_ARTICLE_LEN,
             )
 
