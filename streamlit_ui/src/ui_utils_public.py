@@ -483,46 +483,83 @@ def prepare_admin_messages_to_article(
     sim_to_original_article: float,
     num_of_generated_news: int,
     language: str | None,
+    main_page_language: str,
     min_article_len: int,
 ):
+    max_sim_to_orig = 0.9
+    language_similarity_min = {
+        "en": {"min": 0.635, "max": max_sim_to_orig},
+        "fr": {"min": 0.635, "max": max_sim_to_orig},
+        "de": {"min": 0.551, "max": max_sim_to_orig},
+        "ru": {"min": 0.551, "max": max_sim_to_orig},
+        "ua": {"min": 0.551, "max": max_sim_to_orig},
+    }
+
     messages = []
     if sim_to_original_article is not None:
-        if sim_to_original_article < 0.401:
-            messages.append(
-                {
-                    "type": "error",
-                    "txt": LanguageTranslator.translate(
-                        code_name="news_stream_admin_msg_401"
-                    ),
-                }
-            )
-        elif sim_to_original_article < 0.501:
-            messages.append(
-                {
-                    "type": "warning",
-                    "txt": LanguageTranslator.translate(
-                        code_name="news_stream_admin_msg_501"
-                    ),
-                }
-            )
-        elif sim_to_original_article < 0.635:
-            messages.append(
-                {
-                    "type": "info",
-                    "txt": LanguageTranslator.translate(
-                        code_name="news_stream_admin_msg_635"
-                    ),
-                }
-            )
-        elif sim_to_original_article > 0.9:
-            messages.append(
-                {
-                    "type": "error",
-                    "txt": LanguageTranslator.translate(
-                        code_name="news_stream_admin_msg_plag"
-                    ),
-                }
-            )
+        if main_page_language in language_similarity_min:
+            min_sim = language_similarity_min[main_page_language]["min"]
+            max_sim = language_similarity_min[main_page_language]["max"]
+
+            if sim_to_original_article <= min_sim:
+                messages.append(
+                    {
+                        "type": "error",
+                        "txt": LanguageTranslator.translate(
+                            code_name=(
+                                "news_stream_admin_msg_501"
+                                if min_sim < 0.6
+                                else "news_stream_admin_msg_635"
+                            )
+                        ),
+                    }
+                )
+            elif sim_to_original_article >= max_sim:
+                messages.append(
+                    {
+                        "type": "error",
+                        "txt": LanguageTranslator.translate(
+                            code_name="news_stream_admin_msg_plag"
+                        ),
+                    }
+                )
+        else:
+            if sim_to_original_article < 0.401:
+                messages.append(
+                    {
+                        "type": "error",
+                        "txt": LanguageTranslator.translate(
+                            code_name="news_stream_admin_msg_401"
+                        ),
+                    }
+                )
+            elif sim_to_original_article < 0.501:
+                messages.append(
+                    {
+                        "type": "warning",
+                        "txt": LanguageTranslator.translate(
+                            code_name="news_stream_admin_msg_501"
+                        ),
+                    }
+                )
+            elif sim_to_original_article < 0.635:
+                messages.append(
+                    {
+                        "type": "info",
+                        "txt": LanguageTranslator.translate(
+                            code_name="news_stream_admin_msg_635"
+                        ),
+                    }
+                )
+            elif sim_to_original_article > 0.9:
+                messages.append(
+                    {
+                        "type": "error",
+                        "txt": LanguageTranslator.translate(
+                            code_name="news_stream_admin_msg_plag"
+                        ),
+                    }
+                )
 
     if len(article_txt) < min_article_len:
         messages.append(
@@ -647,6 +684,7 @@ def add_news_to_public_news_stream(
                     sim_to_original_article=sim_to_original_article,
                     num_of_generated_news=num_of_generated_news,
                     language=news["language"],
+                    main_page_language=main_page_language_ico,
                     min_article_len=MIN_ARTICLE_LEN,
                 )
             else:
@@ -716,8 +754,11 @@ def add_news_to_public_news_stream(
                 sim_to_original_article=sim_to_original_article,
                 num_of_generated_news=num_of_generated_news,
                 language=news["language"],
+                main_page_language=main_page_language_ico,
                 min_article_len=MIN_ARTICLE_LEN,
             )
+
+            # Skip news with any admin message
             if len(msg_to_news):
                 continue
 
