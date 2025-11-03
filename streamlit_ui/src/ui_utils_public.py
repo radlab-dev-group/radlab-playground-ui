@@ -491,7 +491,7 @@ def prepare_admin_messages_to_article(
         "en": {"min": 0.635, "max": max_sim_to_orig},
         "fr": {"min": 0.635, "max": max_sim_to_orig},
         "de": {"min": 0.551, "max": max_sim_to_orig},
-        "ru": {"min": 0.551, "max": max_sim_to_orig},
+        "ru": {"min": 0.635, "max": max_sim_to_orig},
         "ua": {"min": 0.551, "max": max_sim_to_orig},
     }
 
