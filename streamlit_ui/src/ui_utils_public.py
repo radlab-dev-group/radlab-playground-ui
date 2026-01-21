@@ -965,14 +965,6 @@ def prepare_news_stream_public_news_tab(
                 num_of_results=number_of_news,
                 last_days=last_days,
             )
-            if not search_n_in_cat or type(search_n_in_cat) not in [dict]:
-                st.info(
-                    LanguageTranslator.translate(
-                        code_name="stream_searching_problem"
-                    )
-                )
-                return
-
             news_in_categories = search_n_in_cat.get("search_result")
 
         if not news_in_categories or type(news_in_categories) not in [dict]:
