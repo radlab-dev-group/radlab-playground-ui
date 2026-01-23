@@ -1,3 +1,31 @@
+"""
+
+Module that defines the Streamlit UI for the news article creator feature. It
+leverages translation utilities, public APIs for fetching news streams and
+generating articles, and UI helper functions to present results to the user.
+
+Functions
+---------
+add_about_creator_to_sidebar():
+    Adds an informational expander to the sidebar describing the creator.
+
+add_technical_info_for_gen_full_article(new_article_response, answer_container,
+                                         number_of_news_used_to_generate):
+    Renders technical metadata (generation time, model, source count, etc.) for
+    a generated article.
+
+call_generate_article_api_and_show_response(user_query_str, type_of_new_article,
+                                            answer_column, search_in_category,
+                                            publ_creator_api, query_response_id):
+    Calls the PublicNewsCreatorAPI to generate an article based on selected news
+    IDs and displays the result together with technical info.
+
+show_creator_search_window(news_options, publ_news_api, publ_creator_api,
+                           categories_sorted):
+    Builds the main UI where the user enters a query, selects options, and
+    triggers the generation workflow.
+"""
+
 import time
 import streamlit as st
 
@@ -9,6 +37,16 @@ from src.ui_utils_public_search import call_search_api_and_show_result
 
 
 def add_about_creator_to_sidebar():
+    """
+    Add an informational expander to the sidebar.
+
+    The expander contains a short description of the “creator” feature,
+    using translated strings obtained from :class:`LanguageTranslator`.
+
+    Returns
+    -------
+    None
+    """
     general_info_cont = st.sidebar.expander(
         LanguageTranslator.translate(code_name="act_creator_what_is_expander"),
         expanded=False,
@@ -22,6 +60,27 @@ def add_about_creator_to_sidebar():
 def add_technical_info_for_gen_full_article(
     new_article_response, answer_container, number_of_news_used_to_generate
 ):
+    """
+    Render technical metadata for a generated article.
+
+        Parameters
+        ----------
+        new_article_response : dict
+            The API response containing generation details (timestamp, duration,
+            model name, etc.).
+        answer_container : streamlit.container
+            The Streamlit container where the information will be written.
+        number_of_news_used_to_generate : int
+            How many news items were fed to the generation model.
+
+        The function writes a visual divider followed by several ``write`` calls
+        that display when the article was generated, how long it took, which model
+        was used, and how many source news items contributed to the output.
+
+        Returns
+        -------
+        None
+    """
     answer_container.divider()
     # when
     when_generated = new_article_response.get("when_generated", "?")
@@ -63,6 +122,35 @@ def call_generate_article_api_and_show_response(
     publ_creator_api: PublicNewsCreatorAPI,
     query_response_id: int,
 ):
+    """
+    Call the article‑generation API and display the result.
+
+        This helper aggregates all news IDs from the ``search_in_category`` mapping,
+        invokes :meth:`PublicNewsCreatorAPI.generate_article_from_search_result`,
+        writes the generated article text to the UI, and finally calls
+        :func:`add_technical_info_for_gen_full_article` to show generation metadata.
+
+        Parameters
+        ----------
+        user_query_str : str
+            The original query entered by the user.
+        type_of_new_article : str
+            A textual prompt describing the desired article style (e.g., “simple”,
+            “formal”).
+        answer_column : streamlit.column
+            The column where the article text and metadata will be rendered.
+        search_in_category : dict
+            Mapping of category names to lists of news dictionaries; each dict must
+            contain an ``id`` key.
+        publ_creator_api : PublicNewsCreatorAPI
+            API client responsible for article generation.
+        query_response_id : int
+            Identifier of the search query, forwarded to the generation endpoint.
+
+        Returns
+        -------
+        None
+    """
     answer_container = answer_column.container(border=False)
     all_news_ids = []
     for category_news in search_in_category.values():
@@ -93,6 +181,34 @@ def show_creator_search_window(
     publ_creator_api: PublicNewsCreatorAPI,
     categories_sorted: List[str],
 ):
+    """
+    Build the main Streamlit UI for the article‑creation workflow.
+
+        The UI consists of:
+        * A text area for the user’s query.
+        * Controls for selecting article style (simple / formal) and the look‑back
+          window (last 1‑2 days).
+        * A “Create” button that triggers a search via
+          :func:`call_search_api_and_show_result` and, upon success, calls
+          :func:`call_generate_article_api_and_show_response`.
+
+        Parameters
+        ----------
+        news_options : dict
+            Configuration for the available news sources; passed unchanged to the
+            search helper.
+        publ_news_api : PublicNewsStreamAPI
+            API client used to retrieve news streams based on the user query.
+        publ_creator_api : PublicNewsCreatorAPI
+            API client used to generate the final article.
+        categories_sorted : List[str]
+            Ordered list of category names that determines the presentation order
+            of search results.
+
+        Returns
+        -------
+        None
+    """
     main_container = st.container(border=False)
     progress_container = main_container.container(border=False)
     query_rag_column, answer_column = main_container.columns([1, 2])
