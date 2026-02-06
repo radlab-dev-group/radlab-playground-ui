@@ -319,6 +319,13 @@ def show_summaries_for_day(
         return
 
     summary = summaries[summary_number]
+    if not len(summary.get("clusters", [])):
+        st.info(
+            LanguageTranslator.translate(
+                code_name="news_browser_no_summaries_for_day"
+            )
+        )
+        return
 
     # Info
     add_info_to_selected_proposition(info=summary["info"])
