@@ -776,12 +776,12 @@ def add_news_to_public_news_stream(
             elif polarity_3c == "positive":
                 ico_to_write_p_3c = ICON_NEWS_POLARITY_3C_P
 
-        pli_from_value, pli_to_value = None, 1.0
-        ico_to_write_pli = ICON_NOT_SET_NEWS_INFO
-        if pli_value is not None:
-            pli_from_value, pli_to_value, ico_to_write_pli = (
-                convert_pli_value_to_icon(pli_value)
-            )
+        # pli_from_value, pli_to_value = None, 1.0
+        # ico_to_write_pli = ICON_NOT_SET_NEWS_INFO
+        # if pli_value is not None:
+        #     pli_from_value, pli_to_value, ico_to_write_pli = (
+        #         convert_pli_value_to_icon(pli_value)
+        #     )
 
         # news_container.write(
         #     f"Info: `3c:`{ico_to_write_p_3c} `pli:`{ico_to_write_pli}"
