@@ -1,4 +1,6 @@
 import datetime
+import json
+
 import pandas as pd
 
 import streamlit as st
@@ -748,19 +750,20 @@ def add_news_to_public_news_stream(
                 ser_response_exp.write(response)
                 continue
         else:
-            # If user is not logged
-            msg_to_news = prepare_admin_messages_to_article(
-                article_txt=user_news_text,
-                sim_to_original_article=sim_to_original_article,
-                num_of_generated_news=num_of_generated_news,
-                language=news["language"],
-                main_page_language=news["main_page_language"],
-                min_article_len=MIN_ARTICLE_LEN,
-            )
-
-            # Skip news with any admin message
-            if len(msg_to_news):
-                continue
+            # # If user is not logged
+            # msg_to_news = prepare_admin_messages_to_article(
+            #     article_txt=user_news_text,
+            #     sim_to_original_article=sim_to_original_article,
+            #     num_of_generated_news=num_of_generated_news,
+            #     language=news["language"],
+            #     main_page_language=news["main_page_language"],
+            #     min_article_len=MIN_ARTICLE_LEN,
+            # )
+            #
+            # # Skip news with any admin message
+            # if len(msg_to_news):
+            #     continue
+            pass
 
         if news_container is None:
             news_container = st.container(border=True)
@@ -972,6 +975,8 @@ def prepare_news_stream_public_news_tab(
                 LanguageTranslator.translate(code_name="stream_searching_problem")
             )
             return
+
+    # print(json.dumps(news_in_categories, indent=2, ensure_ascii=False))
 
     c_names = [c for c in categories.keys()]
     c_names_display = [
