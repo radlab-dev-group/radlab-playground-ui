@@ -417,20 +417,23 @@ def prepare_news_stream_params_public(
         ],
     )
 
-    def_pli_ico, pli_ico2v, pli_v2ico = prepare_pli_icons()
+    # def_pli_ico, pli_ico2v, pli_v2ico = prepare_pli_icons()
+    #
+    # pli_icons = [i for i in pli_ico2v.keys()]
+    # pli_icon_selected = filter_options.radio(
+    #     LanguageTranslator.translate(code_name="news_stream_filter_news_pli_value"),
+    #     pli_icons,
+    # )
+    # if ICON_DEFAULT_VALUE_UI in pli_icon_selected:
+    #     pli_from = None
+    #     pli_to = 1.01
+    # else:
+    #     pli_from, pli_to, ico_to_write_pli = convert_pli_value_to_icon(
+    #         pli_ico2v[pli_icon_selected] - 0.001
+    #     )
 
-    pli_icons = [i for i in pli_ico2v.keys()]
-    pli_icon_selected = filter_options.radio(
-        LanguageTranslator.translate(code_name="news_stream_filter_news_pli_value"),
-        pli_icons,
-    )
-    if ICON_DEFAULT_VALUE_UI in pli_icon_selected:
-        pli_from = None
-        pli_to = 1.01
-    else:
-        pli_from, pli_to, ico_to_write_pli = convert_pli_value_to_icon(
-            pli_ico2v[pli_icon_selected] - 0.001
-        )
+    pli_from = None
+    pli_to = 1.01
 
     cat_www_exp = news_config_container.expander(
         LanguageTranslator.translate(code_name="news_stream_filter_news_sites"),
