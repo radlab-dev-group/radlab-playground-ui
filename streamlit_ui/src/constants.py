@@ -13,14 +13,14 @@ DEFAULT_UI_CONFIG_PATH = "resources/configs/ui-configuration.json"
 DEFAULT_ADMIN_UI_STATUSES_IN_ROW = 4
 
 # Default UI value icon
-ICON_DEFAULT_VALUE_UI = ":ringed_planet:"
+ICON_DEFAULT_VALUE_UI = "🪐"
 
 # Icons connected with news
-ICON_NOT_SET_NEWS_INFO = ":black_small_square:"
+ICON_NOT_SET_NEWS_INFO = "▪️"
 
-ICON_NEWS_POLARITY_3C_P = ":star-struck:"
-ICON_NEWS_POLARITY_3C_N = ":face_with_symbols_on_mouth:"
-ICON_NEWS_POLARITY_3C_A = ":face_with_raised_eyebrow:"
+ICON_NEWS_POLARITY_3C_P = "🤩"
+ICON_NEWS_POLARITY_3C_N = "🤬"
+ICON_NEWS_POLARITY_3C_A = "🤨"
 
 ICON_FLAG_PL_LANG = "🇵🇱"
 ICON_FLAG_EN_LANG = "🇺🇸"
