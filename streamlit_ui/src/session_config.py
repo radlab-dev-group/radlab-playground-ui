@@ -92,7 +92,7 @@ class SessionConfig:
 
     @staticmethod
     def get_session_auth_token():
-        a_token = st.session_state[SessionConfig.AUTHENTICATION_TOKEN]
+        a_token = st.session_state.get(SessionConfig.AUTHENTICATION_TOKEN, None)
         return SessionConfig.__return__value__(a_token)
 
     @staticmethod

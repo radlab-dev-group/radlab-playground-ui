@@ -13,21 +13,21 @@ DEFAULT_UI_CONFIG_PATH = "resources/configs/ui-configuration.json"
 DEFAULT_ADMIN_UI_STATUSES_IN_ROW = 4
 
 # Default UI value icon
-ICON_DEFAULT_VALUE_UI = ":ringed_planet:"
+ICON_DEFAULT_VALUE_UI = "🪐"
 
 # Icons connected with news
-ICON_NOT_SET_NEWS_INFO = ":black_small_square:"
+ICON_NOT_SET_NEWS_INFO = "▪️"
 
-ICON_NEWS_POLARITY_3C_P = ":star-struck:"
-ICON_NEWS_POLARITY_3C_N = ":face_with_symbols_on_mouth:"
-ICON_NEWS_POLARITY_3C_A = ":face_with_raised_eyebrow:"
+ICON_NEWS_POLARITY_3C_P = "🤩"
+ICON_NEWS_POLARITY_3C_N = "🤬"
+ICON_NEWS_POLARITY_3C_A = "🤨"
 
-ICON_FLAG_PL_LANG = ":flag-pl:"
-ICON_FLAG_EN_LANG = ":flag-us:"
-ICON_FLAG_FR_LANG = ":flag-fr:"
-ICON_FLAG_RU_LANG = ":flag-ru:"
-ICON_FLAG_UA_LANG = ":flag-ua:"
-ICON_FLAG_DE_LANG = ":flag-de:"
+ICON_FLAG_PL_LANG = "🇵🇱"
+ICON_FLAG_EN_LANG = "🇺🇸"
+ICON_FLAG_FR_LANG = "🇫🇷"
+ICON_FLAG_RU_LANG = "🇷🇺"
+ICON_FLAG_UA_LANG = "🇺🇦"
+ICON_FLAG_DE_LANG = "🇩🇪"
 
 ICON_NEWS_PLI_BAD = ":red_circle:"
 ICON_NEWS_PLI_NORM = ":large_yellow_circle:"

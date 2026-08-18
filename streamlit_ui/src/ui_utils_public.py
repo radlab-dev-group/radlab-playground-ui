@@ -1,4 +1,6 @@
 import datetime
+import json
+
 import pandas as pd
 
 import streamlit as st
@@ -415,20 +417,23 @@ def prepare_news_stream_params_public(
         ],
     )
 
-    def_pli_ico, pli_ico2v, pli_v2ico = prepare_pli_icons()
+    # def_pli_ico, pli_ico2v, pli_v2ico = prepare_pli_icons()
+    #
+    # pli_icons = [i for i in pli_ico2v.keys()]
+    # pli_icon_selected = filter_options.radio(
+    #     LanguageTranslator.translate(code_name="news_stream_filter_news_pli_value"),
+    #     pli_icons,
+    # )
+    # if ICON_DEFAULT_VALUE_UI in pli_icon_selected:
+    #     pli_from = None
+    #     pli_to = 1.01
+    # else:
+    #     pli_from, pli_to, ico_to_write_pli = convert_pli_value_to_icon(
+    #         pli_ico2v[pli_icon_selected] - 0.001
+    #     )
 
-    pli_icons = [i for i in pli_ico2v.keys()]
-    pli_icon_selected = filter_options.radio(
-        LanguageTranslator.translate(code_name="news_stream_filter_news_pli_value"),
-        pli_icons,
-    )
-    if ICON_DEFAULT_VALUE_UI in pli_icon_selected:
-        pli_from = None
-        pli_to = 1.01
-    else:
-        pli_from, pli_to, ico_to_write_pli = convert_pli_value_to_icon(
-            pli_ico2v[pli_icon_selected] - 0.001
-        )
+    pli_from = None
+    pli_to = 1.01
 
     cat_www_exp = news_config_container.expander(
         LanguageTranslator.translate(code_name="news_stream_filter_news_sites"),
@@ -748,19 +753,20 @@ def add_news_to_public_news_stream(
                 ser_response_exp.write(response)
                 continue
         else:
-            # If user is not logged
-            msg_to_news = prepare_admin_messages_to_article(
-                article_txt=user_news_text,
-                sim_to_original_article=sim_to_original_article,
-                num_of_generated_news=num_of_generated_news,
-                language=news["language"],
-                main_page_language=news["main_page_language"],
-                min_article_len=MIN_ARTICLE_LEN,
-            )
-
-            # Skip news with any admin message
-            if len(msg_to_news):
-                continue
+            # # If user is not logged
+            # msg_to_news = prepare_admin_messages_to_article(
+            #     article_txt=user_news_text,
+            #     sim_to_original_article=sim_to_original_article,
+            #     num_of_generated_news=num_of_generated_news,
+            #     language=news["language"],
+            #     main_page_language=news["main_page_language"],
+            #     min_article_len=MIN_ARTICLE_LEN,
+            # )
+            #
+            # # Skip news with any admin message
+            # if len(msg_to_news):
+            #     continue
+            pass
 
         if news_container is None:
             news_container = st.container(border=True)
@@ -773,16 +779,18 @@ def add_news_to_public_news_stream(
             elif polarity_3c == "positive":
                 ico_to_write_p_3c = ICON_NEWS_POLARITY_3C_P
 
-        pli_from_value, pli_to_value = None, 1.0
-        ico_to_write_pli = ICON_NOT_SET_NEWS_INFO
-        if pli_value is not None:
-            pli_from_value, pli_to_value, ico_to_write_pli = (
-                convert_pli_value_to_icon(pli_value)
-            )
+        # pli_from_value, pli_to_value = None, 1.0
+        # ico_to_write_pli = ICON_NOT_SET_NEWS_INFO
+        # if pli_value is not None:
+        #     pli_from_value, pli_to_value, ico_to_write_pli = (
+        #         convert_pli_value_to_icon(pli_value)
+        #     )
 
-        news_container.write(
-            f"Info: `3c:`{ico_to_write_p_3c} `pli:`{ico_to_write_pli}"
-        )
+        # news_container.write(
+        #     f"Info: `3c:`{ico_to_write_p_3c} `pli:`{ico_to_write_pli}"
+        # )
+
+        news_container.write(f"Info: `3c:`{ico_to_write_p_3c}")
 
         news_container.write(user_news_text)
 
@@ -972,6 +980,8 @@ def prepare_news_stream_public_news_tab(
                 LanguageTranslator.translate(code_name="stream_searching_problem")
             )
             return
+
+    # print(json.dumps(news_in_categories, indent=2, ensure_ascii=False))
 
     c_names = [c for c in categories.keys()]
     c_names_display = [
