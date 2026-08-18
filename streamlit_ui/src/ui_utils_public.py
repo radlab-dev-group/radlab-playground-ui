@@ -790,9 +790,7 @@ def add_news_to_public_news_stream(
         #     f"Info: `3c:`{ico_to_write_p_3c} `pli:`{ico_to_write_pli}"
         # )
 
-        news_container.write(
-            f"Info: `3c:`{ico_to_write_p_3c}"
-        )
+        news_container.write(f"Info: `3c:`{ico_to_write_p_3c}")
 
         news_container.write(user_news_text)
 
