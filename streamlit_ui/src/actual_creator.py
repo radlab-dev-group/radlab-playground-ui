@@ -234,7 +234,7 @@ def show_creator_search_window(
     )
     last_days = last_days_column.selectbox(
         LanguageTranslator.translate(code_name="act_creator_news_last_days"),
-        [1, 2],
+        [1, 2, 7],
         index=0,
     )
 
