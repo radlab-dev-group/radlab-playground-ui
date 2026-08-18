@@ -369,7 +369,7 @@ def prepare_news_stream_params_public(
             LanguageTranslator.translate(
                 code_name="news_stream_params_public_show_with_message"
             ),
-            value=True,
+            value=False,
         )
 
     news_in_category = 25
