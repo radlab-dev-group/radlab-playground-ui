@@ -58,7 +58,7 @@ def main():
                 "pages/public_chat.py",
                 title=LanguageTranslator.translate(code_name="menu_public_chat"),
                 icon=ApplicationIcons.PUBLIC_CHAT_ICO,
-            ),
+            )
         )
         pages.append(
             st.Page(
