@@ -39,16 +39,6 @@ def main():
             icon=ApplicationIcons.BROWSER_ICO,
         ),
         st.Page(
-            "pages/info_explorator.py",
-            title=LanguageTranslator.translate(code_name="menu_info_explorer"),
-            icon=ApplicationIcons.EXPLORER_ICO,
-        ),
-        st.Page(
-            "pages/public_chat.py",
-            title=LanguageTranslator.translate(code_name="menu_public_chat"),
-            icon=ApplicationIcons.PUBLIC_CHAT_ICO,
-        ),
-        st.Page(
             "pages/administration.py",
             title=LanguageTranslator.translate(code_name="menu_administration"),
             icon=ApplicationIcons.ADMINISTRATION_ICO,
@@ -57,10 +47,25 @@ def main():
 
     if token_str is not None and len(token_str.strip()):
         last_page = pages[-1]
+
         pages[-1] = st.Page(
-            "pages/statistics.py",
-            title=LanguageTranslator.translate(code_name="menu_statistics"),
-            icon=ApplicationIcons.STATISTICS_ICO,
+            "pages/info_explorator.py",
+            title=LanguageTranslator.translate(code_name="menu_info_explorer"),
+            icon=ApplicationIcons.EXPLORER_ICO,
+        )
+        pages.extend(
+            [
+                st.Page(
+                    "pages/public_chat.py",
+                    title=LanguageTranslator.translate(code_name="menu_public_chat"),
+                    icon=ApplicationIcons.PUBLIC_CHAT_ICO,
+                ),
+                st.Page(
+                    "pages/statistics.py",
+                    title=LanguageTranslator.translate(code_name="menu_statistics"),
+                    icon=ApplicationIcons.STATISTICS_ICO,
+                ),
+            ]
         )
         pages.append(last_page)
 
