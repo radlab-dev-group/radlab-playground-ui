@@ -83,7 +83,8 @@ def home():
 
     apps_desc_container = st.container(border=True)
 
-    stream, creator, n_browser, i_explorator, chat, stats, admin = (
+    # stream, creator, n_browser, i_explorator, chat, stats, admin = (
+    stream, creator, n_browser, admin = (
         apps_desc_container.tabs(sections)
     )
     add_stram_description(stream)
