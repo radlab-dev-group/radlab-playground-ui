@@ -8,12 +8,12 @@ def add_stram_description(elem):
     elem.markdown(
         LanguageTranslator.translate(code_name="home_stream_description_pt1")
     )
-    elem_exp = elem.expander(
-        LanguageTranslator.translate(code_name="home_stream_more_info")
-    )
-    elem_exp.markdown(
-        LanguageTranslator.translate(code_name="home_stream_description_pt2")
-    )
+    # elem_exp = elem.expander(
+    #     LanguageTranslator.translate(code_name="home_stream_more_info")
+    # )
+    # elem_exp.markdown(
+    #     LanguageTranslator.translate(code_name="home_stream_description_pt2")
+    # )
 
 
 def add_creator_description(elem):
@@ -58,12 +58,12 @@ def home():
 
     st.markdown(LanguageTranslator.translate(code_name="home_plg_descr"))
 
-    # more_info_exp = st.expander(
-    #     LanguageTranslator.translate(code_name="home_plg_more_info")
-    # )
-    # more_info_exp.markdown(
-    #     LanguageTranslator.translate(code_name="home_plg_descr_detailed_p1")
-    # )
+    more_info_exp = st.expander(
+        LanguageTranslator.translate(code_name="home_plg_more_info")
+    )
+    more_info_exp.markdown(
+        LanguageTranslator.translate(code_name="home_plg_descr_detailed_p1")
+    )
 
     instruct_exp = st.expander(
         LanguageTranslator.translate(code_name="home_plg_more_info_p2")
