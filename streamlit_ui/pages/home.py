@@ -75,9 +75,9 @@ def home():
         LanguageTranslator.translate(code_name="home_tab_news_stream"),
         LanguageTranslator.translate(code_name="home_tab_creator_actual"),
         LanguageTranslator.translate(code_name="home_tab_info_viewer"),
-        LanguageTranslator.translate(code_name="home_tab_info_explorator"),
-        LanguageTranslator.translate(code_name="home_tab_public_chat"),
-        LanguageTranslator.translate(code_name="home_tab_statistics"),
+        # LanguageTranslator.translate(code_name="home_tab_info_explorator"),
+        # LanguageTranslator.translate(code_name="home_tab_public_chat"),
+        # LanguageTranslator.translate(code_name="home_tab_statistics"),
         LanguageTranslator.translate(code_name="home_tab_admin"),
     ]
 
@@ -89,9 +89,9 @@ def home():
     add_stram_description(stream)
     add_creator_description(creator)
     add_news_browser_description(n_browser)
-    add_information_extractor_description(i_explorator)
-    add_chat_description(chat)
-    add_stats_description(stats)
+    # add_information_extractor_description(i_explorator)
+    # add_chat_description(chat)
+    # add_stats_description(stats)
     add_admin_description(admin)
 
 
