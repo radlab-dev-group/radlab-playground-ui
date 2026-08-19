@@ -901,7 +901,7 @@ class NewsStreamMockQuestions:
         PREDEFINED_QUESTION_11,
         PREDEFINED_QUESTION_1,
         PREDEFINED_QUESTION_5,
-        PREDEFINED_QUESTION_13,
+        # PREDEFINED_QUESTION_13,
     ]
 
 
