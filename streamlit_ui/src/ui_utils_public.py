@@ -864,7 +864,7 @@ class NewsStreamMockQuestions:
         "en": "",
     }
     PREDEFINED_QUESTION_2 = {"pl": "Aktualna pogoda w Polsce", "en": ""}
-    PREDEFINED_QUESTION_3 = {"pl": "Zmiany w polskim prawie", "en": ""}
+    PREDEFINED_QUESTION_3 = {"pl": "Zmiany zasad w polskim prawie", "en": ""}
     PREDEFINED_QUESTION_4 = {"pl": "Informacje o kryptowalutach", "en": ""}
     PREDEFINED_QUESTION_5 = {
         "pl": "Drony i zagrożenie przestrzeni powietrznej",
@@ -886,10 +886,10 @@ class NewsStreamMockQuestions:
         "pl": "Informacje związane z polityką Polską",
         "en": "",
     }
-    PREDEFINED_QUESTION_13 = {"pl": "Międzynarodowe układy polityczne", "en": ""}
+    # PREDEFINED_QUESTION_13 = {"pl": "Międzynarodowe układy polityczne", "en": ""}
 
     PREDEFINED_QUESTIONS = [
-        PREDEFINED_QUESTION_10,
+        # PREDEFINED_QUESTION_10,
         PREDEFINED_QUESTION_4,
         PREDEFINED_QUESTION_2,
         PREDEFINED_QUESTION_3,
@@ -901,7 +901,7 @@ class NewsStreamMockQuestions:
         PREDEFINED_QUESTION_11,
         PREDEFINED_QUESTION_1,
         PREDEFINED_QUESTION_5,
-        PREDEFINED_QUESTION_13,
+        # PREDEFINED_QUESTION_13,
     ]
 
 

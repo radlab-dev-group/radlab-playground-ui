@@ -8,12 +8,12 @@ def add_stram_description(elem):
     elem.markdown(
         LanguageTranslator.translate(code_name="home_stream_description_pt1")
     )
-    elem_exp = elem.expander(
-        LanguageTranslator.translate(code_name="home_stream_more_info")
-    )
-    elem_exp.markdown(
-        LanguageTranslator.translate(code_name="home_stream_description_pt2")
-    )
+    # elem_exp = elem.expander(
+    #     LanguageTranslator.translate(code_name="home_stream_more_info")
+    # )
+    # elem_exp.markdown(
+    #     LanguageTranslator.translate(code_name="home_stream_description_pt2")
+    # )
 
 
 def add_creator_description(elem):
@@ -75,23 +75,22 @@ def home():
         LanguageTranslator.translate(code_name="home_tab_news_stream"),
         LanguageTranslator.translate(code_name="home_tab_creator_actual"),
         LanguageTranslator.translate(code_name="home_tab_info_viewer"),
-        LanguageTranslator.translate(code_name="home_tab_info_explorator"),
-        LanguageTranslator.translate(code_name="home_tab_public_chat"),
-        LanguageTranslator.translate(code_name="home_tab_statistics"),
+        # LanguageTranslator.translate(code_name="home_tab_info_explorator"),
+        # LanguageTranslator.translate(code_name="home_tab_public_chat"),
+        # LanguageTranslator.translate(code_name="home_tab_statistics"),
         LanguageTranslator.translate(code_name="home_tab_admin"),
     ]
 
     apps_desc_container = st.container(border=True)
 
-    stream, creator, n_browser, i_explorator, chat, stats, admin = (
-        apps_desc_container.tabs(sections)
-    )
+    # stream, creator, n_browser, i_explorator, chat, stats, admin = (
+    stream, creator, n_browser, admin = apps_desc_container.tabs(sections)
     add_stram_description(stream)
     add_creator_description(creator)
     add_news_browser_description(n_browser)
-    add_information_extractor_description(i_explorator)
-    add_chat_description(chat)
-    add_stats_description(stats)
+    # add_information_extractor_description(i_explorator)
+    # add_chat_description(chat)
+    # add_stats_description(stats)
     add_admin_description(admin)
 
 
