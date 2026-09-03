@@ -33,8 +33,6 @@ from src.constants import (
     MIN_STREAM_QUERY_LEN,
 )
 
-from src.definitions import prepare_pli_icons, ICON_NEWS_PLI_GOOD
-
 from src.data_utils import (
     prepare_news_to_user,
     convert_admin_pages_stats_news_p_day,
@@ -465,22 +463,6 @@ def prepare_news_stream_params_public(
     }
 
     return options
-
-
-def convert_pli_value_to_icon(pli_value) -> (float, float, str):
-    prev_pli_conv = {"below_value": 0, "icon": ICON_NOT_SET_NEWS_INFO}
-
-    def_pli_icons, pli_ico2v, pli_v2ico = prepare_pli_icons()
-
-    for pli_conv in def_pli_icons:
-        if pli_value < pli_conv["below_value"]:
-            return (
-                prev_pli_conv["below_value"],
-                pli_conv["below_value"],
-                pli_conv["icon"],
-            )
-        prev_pli_conv = pli_conv
-    return 0.0, 1.0, ICON_NEWS_PLI_GOOD
 
 
 def prepare_admin_messages_to_article(
