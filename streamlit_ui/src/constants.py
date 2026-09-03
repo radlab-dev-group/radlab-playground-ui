@@ -29,10 +29,6 @@ ICON_FLAG_RU_LANG = "🇷🇺"
 ICON_FLAG_UA_LANG = "🇺🇦"
 ICON_FLAG_DE_LANG = "🇩🇪"
 
-ICON_NEWS_PLI_BAD = ":red_circle:"
-ICON_NEWS_PLI_NORM = ":large_yellow_circle:"
-ICON_NEWS_PLI_GOOD = ":large_green_circle:"
-
 MIN_ARTICLE_LEN = 130
 
 # Definitions used while translation, the single text occurrence
@@ -49,9 +45,6 @@ REPLACE_FOR_TRANSLATIONS = {
     "{ICON_FLAG_UA_LANG}": ICON_FLAG_UA_LANG,
     "{ICON_FLAG_DE_LANG}": ICON_FLAG_DE_LANG,
     "{ICON_FLAG_EN_LANG}": ICON_FLAG_EN_LANG,
-    "{ICON_NEWS_PLI_BAD}": ICON_NEWS_PLI_BAD,
-    "{ICON_NEWS_PLI_NORM}": ICON_NEWS_PLI_NORM,
-    "{ICON_NEWS_PLI_GOOD}": ICON_NEWS_PLI_GOOD,
 }
 
 MIN_STREAM_QUERY_LEN = 12
