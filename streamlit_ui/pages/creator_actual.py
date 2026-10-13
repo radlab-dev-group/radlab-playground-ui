@@ -1,49 +1,74 @@
 import streamlit as st
 
 from src.language import LanguageTranslator
-from src.constants import DEFAULT_UI_CONFIG_PATH
-from src.api_public import PublicNewsStreamAPI, PublicNewsCreatorAPI
-from src.ui_utils_public import prepare_info_creator_public, initialize_page
+from src.ui_utils_public import initialize_page
 
-from src.actual_creator import (
-    add_about_creator_to_sidebar,
-    show_creator_search_window,
-)
+NEW_APP_URL = "https://puls.apps.radlab.dev"
 
 
 def main():
     st.set_page_config(
         page_title=LanguageTranslator.translate(code_name="creator_page_title"),
-        page_icon="🧊",
+        page_icon="📡",
         layout="wide",
-        initial_sidebar_state="expanded",
+        initial_sidebar_state="collapsed",
     )
     initialize_page()
 
-    add_about_creator_to_sidebar()
-    # token_str = SessionConfig.get_session_auth_token()
-    # token_info = SessionConfig.get_session_auth_token_full_info()
-
-    p_ns_api = PublicNewsStreamAPI(
-        config_path=DEFAULT_UI_CONFIG_PATH,
+    st.markdown(
+        """
+        <style>
+        .migration-card {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        .migration-card h2 {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        .migration-card p {
+            font-size: 1.1rem;
+            color: #475569;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        .migration-card a {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: #3b82f6;
+            color: white;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+        }
+        .migration-card a:hover {
+            background: #2563eb;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
     )
 
-    p_nc_api = PublicNewsCreatorAPI(
-        config_path=DEFAULT_UI_CONFIG_PATH,
-    )
-
-    categories_with_pages = p_ns_api.list_available_categories_with_pages()
-    news_options = prepare_info_creator_public(
-        categories_with_pages=categories_with_pages
-    )
-
-    # show_examples(SAMPLE_SSE_QUERIES)
-    categories_sorted = list(news_options["filter_pages"].keys())
-    show_creator_search_window(
-        news_options=news_options,
-        publ_news_api=p_ns_api,
-        publ_creator_api=p_nc_api,
-        categories_sorted=categories_sorted,
+    st.markdown(
+        f"""
+        <div class="migration-card">
+            <h2>📡 Kreator aktualności został przeniesiony</h2>
+            <p>
+                Funkcjonalność kreatora aktualności została przeniesiona do nowej aplikacji
+                o nazwie <strong>Puls Informacji</strong>.
+                Zapraszamy do korzystania z odświeżonego interfejsu pod adresem:
+            </p>
+            <a href="{NEW_APP_URL}" target="_blank" rel="noopener noreferrer">{NEW_APP_URL}</a>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
 
