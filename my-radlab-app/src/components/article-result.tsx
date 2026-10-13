@@ -15,10 +15,10 @@ interface ArticleResultProps {
 }
 
 /**
- * The generated article, presented as the hero of the page (editorial sheet).
+ * The generated article, presented as a magazine-style reading sheet.
  * Port of call_generate_article_api_and_show_response +
  * add_technical_info_for_gen_full_article, with the Markdown title promoted to
- * a real headline.
+ * a real headline and the technical metadata tucked away in a disclosure.
  */
 export function ArticleResult({
   lang,
@@ -67,85 +67,110 @@ export function ArticleResult({
     URL.revokeObjectURL(url);
   }
 
-  return (
-    <section className="panel panel-glow animate-fade-up relative overflow-hidden rounded-2xl">
-      <div className="relative flex flex-col gap-3 border-b border-slate-200 bg-slate-50/60 px-5 py-4 sm:flex-row sm:items-center sm:px-8">
-        <span className="inline-flex h-7 w-fit items-center rounded-md bg-teal-50 px-2 text-xs font-medium text-teal-700">
-          02
-        </span>
-        <h3 className="text-base font-semibold text-slate-900">
-          {t(lang, "article_title")}
-        </h3>
-        <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
-          <button
-            onClick={handleCopy}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-teal-800 transition hover:border-teal-300 hover:bg-teal-50"
-          >
-            {copied ? `✓ ${t(lang, "copied")}` : `⧉ ${t(lang, "copy")}`}
-          </button>
-          <button
-            onClick={handleDownload}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-teal-800 transition hover:border-teal-300 hover:bg-teal-50"
-          >
-            ↓ {t(lang, "download")}
-          </button>
-        </div>
-      </div>
+  const actions = (
+    <div className="flex flex-wrap items-center gap-2">
+      <button
+        onClick={handleCopy}
+        className="rounded-full border border-paper-300 bg-paper-50 px-4 py-2 text-xs font-medium text-ink-700 transition hover:border-accent-200 hover:bg-accent-50 hover:text-accent-800"
+      >
+        {copied ? `✓ ${t(lang, "copied")}` : `⧉ ${t(lang, "copy")}`}
+      </button>
+      <button
+        onClick={handleDownload}
+        className="rounded-full border border-paper-300 bg-paper-50 px-4 py-2 text-xs font-medium text-ink-700 transition hover:border-accent-200 hover:bg-accent-50 hover:text-accent-800"
+      >
+        ↓ {t(lang, "download")}
+      </button>
+    </div>
+  );
 
-      <div className="relative mx-auto max-w-[78ch] px-5 py-8 sm:px-10 sm:py-10">
-        <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs">
-          <span className="inline-flex items-center gap-2 rounded-full bg-teal-50 px-3 py-1.5 text-teal-800">
-            <span className="h-1.5 w-1.5 rounded-full bg-teal-600" />
-            {t(lang, "article_onair")}
-          </span>
+  return (
+    <section
+      id="article"
+      className="paper animate-fade-up relative overflow-hidden rounded-3xl"
+    >
+      {/* Thin accent ribbon at the very top of the sheet. */}
+      <div
+        aria-hidden="true"
+        className="h-1.5 w-full bg-gradient-to-r from-accent-700 via-accent-600 to-sun-200"
+      />
+
+      <div className="mx-auto max-w-[72ch] px-5 pb-10 pt-8 sm:px-10 sm:pb-14 sm:pt-12">
+        <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold uppercase tracking-[0.14em] text-accent-700">
+          <span>{t(lang, "article_onair")}</span>
         </div>
 
         {parsed.headline ? (
-          <h2 className="mb-6 break-words font-editorial text-3xl leading-[1.2] tracking-tight text-slate-900 sm:text-[42px]">
+          <h2 className="mb-6 break-words font-editorial text-4xl font-semibold leading-[1.12] tracking-tight text-ink-950 sm:text-[3.1rem]">
             {parsed.headline}
           </h2>
         ) : null}
 
-        <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 border-y border-slate-200 py-4 text-xs leading-relaxed text-slate-600">
-          <span>
-            <span>{stats.when}</span>
+        <div className="mb-10 flex flex-wrap items-center gap-x-3 gap-y-2 border-y border-paper-300 py-4 text-sm text-ink-500">
+          <span className="font-medium text-ink-700">
+            {t(lang, "reading_time_long").replace("{minutes}", String(stats.minutes))}
           </span>
-          <span className="text-slate-300">·</span>
+          <span aria-hidden="true" className="text-paper-400">·</span>
           <span>
             {t(lang, "based_on")}{" "}
-            <span className="font-medium text-teal-800">{numberOfNewsUsed}</span>{" "}
-            {t(lang, "sources_used")}
+            <a href="#sources" className="font-medium text-accent-700 underline-offset-4 hover:underline">
+              {numberOfNewsUsed} {t(lang, "sources_used")}
+            </a>
           </span>
-          <span className="text-slate-300">·</span>
-          <span>
-            <span>{stats.words}</span>{" "}
-            {t(lang, "word_count")}
-          </span>
-          <span className="text-slate-300">·</span>
-          <span>
-            <span>{stats.minutes}</span>{" "}
-            {t(lang, "reading_time")}
-          </span>
+          <span aria-hidden="true" className="text-paper-400">·</span>
+          <span>{stats.when}</span>
+          <div className="ml-auto hidden sm:block">{actions}</div>
         </div>
 
-        <article className="article-body max-w-[65ch] text-slate-700">
+        <article className="article-body">
           {blocks.length > 0 ? (
             blocks
           ) : (
-            <p className="text-[15px] text-slate-500">
+            <p className="font-sans text-base text-ink-500">
               {text || t(lang, "article_empty")}
             </p>
           )}
         </article>
 
-        <div className="mt-10 flex flex-wrap gap-x-5 gap-y-2 border-t border-slate-200 pt-4 text-xs leading-relaxed text-slate-500">
-          <span>{t(lang, "gen_model")}: {stats.model}</span>
-          <span>{t(lang, "gen_time")}: {stats.time}</span>
+        <div className="mt-12 rounded-2xl bg-paper-200 px-5 py-4 sm:flex sm:items-center sm:justify-between sm:gap-6">
+          <p className="text-sm text-ink-700">{t(lang, "article_actions_hint")}</p>
+          <div className="mt-3 sm:mt-0">{actions}</div>
         </div>
-        <p className="mt-3 break-words text-xs leading-relaxed text-slate-500">
-          RAG · {query.slice(0, 110)}
-          {query.length > 110 && "…"}
-        </p>
+
+        <details className="group mt-6 text-sm text-ink-500">
+          <summary className="inline-flex items-center gap-2 rounded-full py-1 text-xs font-medium text-ink-400 transition hover:text-ink-700 [&::-webkit-details-marker]:hidden">
+            <span aria-hidden="true" className="transition group-open:rotate-90">
+              ▸
+            </span>
+            {t(lang, "tech_details")}
+          </summary>
+          <dl className="mt-3 grid gap-x-6 gap-y-2 border-t border-paper-300 pt-3 text-xs sm:grid-cols-2">
+            <div className="flex justify-between gap-4 sm:block">
+              <dt className="text-ink-400">{t(lang, "article_topic")}</dt>
+              <dd className="break-words text-right text-ink-700 sm:text-left">{query}</dd>
+            </div>
+            <div className="flex justify-between gap-4 sm:block">
+              <dt className="text-ink-400">{t(lang, "news_used")}</dt>
+              <dd className="text-ink-700">{numberOfNewsUsed}</dd>
+            </div>
+            <div className="flex justify-between gap-4 sm:block">
+              <dt className="text-ink-400">{t(lang, "gen_model")}</dt>
+              <dd className="break-words text-right text-ink-700 sm:text-left">{stats.model}</dd>
+            </div>
+            <div className="flex justify-between gap-4 sm:block">
+              <dt className="text-ink-400">{t(lang, "gen_time")}</dt>
+              <dd className="text-ink-700">{stats.time}</dd>
+            </div>
+            <div className="flex justify-between gap-4 sm:block">
+              <dt className="text-ink-400">{t(lang, "word_count")}</dt>
+              <dd className="text-ink-700">{stats.words}</dd>
+            </div>
+            <div className="flex justify-between gap-4 sm:block">
+              <dt className="text-ink-400">{t(lang, "when_generated")}</dt>
+              <dd className="text-ink-700">{stats.when}</dd>
+            </div>
+          </dl>
+        </details>
       </div>
     </section>
   );

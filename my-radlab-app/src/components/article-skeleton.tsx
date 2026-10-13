@@ -9,23 +9,26 @@ import { t, type Lang } from "@/lib/i18n";
  */
 export function ArticleSkeleton({ lang, label }: { lang: Lang; label: string }) {
   return (
-    <section aria-busy="true" className="panel rounded-2xl px-5 py-6 sm:px-8">
-      <div>
-        <div className="mb-5 flex items-center gap-2 text-sm font-medium text-teal-800">
-          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-teal-600" />
+    <section aria-busy="true" className="paper relative overflow-hidden rounded-3xl">
+      <div
+        aria-hidden="true"
+        className="h-1.5 w-full bg-gradient-to-r from-accent-700 via-accent-600 to-sun-200 opacity-60"
+      />
+      <div className="mx-auto max-w-[72ch] px-5 pb-10 pt-8 sm:px-10 sm:pt-12">
+        <div className="mb-6 text-xs font-semibold uppercase tracking-[0.14em] text-accent-700/70">
           {t(lang, "article_onair")}
         </div>
 
-        <div aria-hidden="true" className="mb-3 h-8 w-3/4 rounded-lg bg-slate-200 motion-safe:animate-pulse" />
-        <div aria-hidden="true" className="mb-7 h-8 w-1/2 rounded-lg bg-slate-100 motion-safe:animate-pulse" />
+        <div aria-hidden="true" className="mb-3 h-10 w-4/5 rounded-lg bg-paper-300 motion-safe:animate-pulse" />
+        <div aria-hidden="true" className="mb-8 h-10 w-1/2 rounded-lg bg-paper-200 motion-safe:animate-pulse" />
 
-        <div aria-hidden="true" className="mb-7 h-px w-full bg-slate-200" />
+        <div aria-hidden="true" className="mb-8 h-px w-full bg-paper-300" />
 
-        <div aria-hidden="true" className="max-w-[70ch] space-y-3">
-          {[100, 96, 88, 92, 72].map((width, idx) => (
+        <div aria-hidden="true" className="space-y-4">
+          {[100, 96, 88, 92, 72, 90, 60].map((width, idx) => (
             <div
               key={idx}
-              className="h-3 rounded bg-slate-100 motion-safe:animate-pulse"
+              className="h-3.5 rounded bg-paper-200 motion-safe:animate-pulse"
               style={{
                 width: `${width}%`,
                 animationDelay: `${idx * 120}ms`,
@@ -34,9 +37,15 @@ export function ArticleSkeleton({ lang, label }: { lang: Lang; label: string }) 
           ))}
         </div>
 
-        <div role="status" className="mt-7 flex items-start gap-2 text-sm text-teal-700">
-          <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600" />
-          <span className="min-w-0 break-words">{label}</span>
+        <div
+          role="status"
+          className="mt-10 flex items-start gap-3 rounded-2xl bg-accent-50 px-4 py-3 text-sm text-accent-800"
+        >
+          <span
+            aria-hidden="true"
+            className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent-600 motion-safe:animate-blink"
+          />
+          <span className="min-w-0 break-words leading-relaxed">{label}</span>
         </div>
       </div>
     </section>

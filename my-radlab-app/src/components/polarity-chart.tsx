@@ -27,9 +27,9 @@ const POLARITY_META: Record<
   ambivalent: {
     key: "amb",
     label: "●",
-    color: "text-slate-600",
-    bar: "bg-slate-500",
-    dot: "bg-slate-500",
+    color: "text-ink-500",
+    bar: "bg-paper-400",
+    dot: "bg-paper-400",
   },
 };
 
@@ -38,9 +38,9 @@ export function polarityMeta(value: string | null | undefined) {
   return {
     key: "no_polarity",
     label: "●",
-    color: "text-slate-600",
-    bar: "bg-slate-600",
-    dot: "bg-slate-600",
+    color: "text-ink-400",
+    bar: "bg-ink-400",
+    dot: "bg-ink-400",
   };
 }
 
@@ -85,11 +85,11 @@ export function PolarityBar({
 
   return (
     <div className={cn("w-full min-w-0 lg:w-auto lg:min-w-[220px]", className)}>
-      <div className="mb-2 flex items-center justify-between gap-3 text-xs text-slate-600">
-        <span>{t(lang, "polarity_title")}</span>
-        <span>n={total}</span>
+      <div className="mb-2 flex items-center justify-between gap-3 text-xs text-ink-500">
+        <span className="font-medium text-ink-700">{t(lang, "polarity_title")}</span>
+        <span>{total}</span>
       </div>
-      <div aria-hidden="true" className="flex h-2 w-full overflow-hidden rounded-full bg-slate-100">
+      <div aria-hidden="true" className="flex h-2.5 w-full overflow-hidden rounded-full bg-paper-200">
         {segments.map(({ key, count }) => (
           <div
             key={key}
@@ -109,8 +109,8 @@ export function PolarityBar({
             <span className={polarityMeta(key).color}>
               {t(lang, polarityMeta(key).key)}
             </span>
-            <span className="text-slate-600">
-              {count} ({Math.round((count / total) * 100)}%)
+            <span className="text-ink-400">
+              {Math.round((count / total) * 100)}%
             </span>
           </span>
         ))}

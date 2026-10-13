@@ -23,7 +23,20 @@ const DICT: Dict = {
     pl: "Wybierz temat. Zbierz aktualne wiadomości z wielu źródeł w jeden czytelny artykuł. Źródła znajdziesz tuż pod tekstem.",
     en: "Choose a topic. Bring current news from multiple sources together in one easy-to-read article. You’ll find the sources just below the text.",
   },
-  live_badge: { pl: "INDEKS AKTYWNY", en: "INDEX LIVE" },
+  live_badge: { pl: "Źródła gotowe", en: "Sources ready" },
+  live_badge_wait: { pl: "Łączenie ze źródłami…", en: "Connecting to sources…" },
+  intro_step_1: {
+    pl: "Wpisz, co Cię interesuje",
+    en: "Tell us what you’re curious about",
+  },
+  intro_step_2: {
+    pl: "Przeszukamy aktualne wiadomości z wielu serwisów",
+    en: "We search current news across many outlets",
+  },
+  intro_step_3: {
+    pl: "Dostaniesz jeden, spójny artykuł do przeczytania",
+    en: "You get one coherent article to read",
+  },
   index_note: {
     pl: "News ze Strumienia Aktualności trafia do indeksu po ok. 10 minutach",
     en: "News from the stream lands in the index after ~10 minutes",
@@ -64,7 +77,24 @@ const DICT: Dict = {
   btn_run: { pl: "Przygotuj artykuł", en: "Create article" },
   btn_edit_query: { pl: "Edytuj zapytanie", en: "Edit query" },
   btn_close_editor: { pl: "Zwiń", en: "Collapse" },
-  btn_run_again: { pl: "Wygeneruj ponownie", en: "Generate again" },
+  btn_run_again: { pl: "Przygotuj ponownie", en: "Create again" },
+  btn_new_topic: { pl: "Nowy temat", en: "New topic" },
+  shortcut_hint: {
+    pl: "lub naciśnij Ctrl + Enter",
+    en: "or press Ctrl + Enter",
+  },
+  style_simple_desc: {
+    pl: "Prosty język, krótkie zdania",
+    en: "Plain language, short sentences",
+  },
+  style_formal_desc: {
+    pl: "Rzeczowy, oficjalny ton",
+    en: "Matter-of-fact, official tone",
+  },
+  day_1: { pl: "Dziś", en: "Today" },
+  day_2: { pl: "2 dni", en: "2 days" },
+  day_7: { pl: "Tydzień", en: "Week" },
+  days_suffix: { pl: "dni", en: "days" },
   suggestions_title: {
     pl: "Szukasz inspiracji?",
     en: "Need some inspiration?",
@@ -101,6 +131,14 @@ const DICT: Dict = {
     en: "Creating the article... on our hardware this may take a while (even 1-2 min)... :)",
   },
   progress_ready: { pl: "Gotowe!", en: "Ready!" },
+  progress_search_short: {
+    pl: "Szukamy wiadomości na Twój temat…",
+    en: "Looking for news on your topic…",
+  },
+  progress_gen_short: {
+    pl: "Piszemy artykuł. To może potrwać 1–2 minuty — warto chwilę poczekać.",
+    en: "Writing your article. This can take 1–2 minutes — worth the wait.",
+  },
   notice_title: { pl: "Informacja", en: "Notice" },
   no_data_found: {
     pl: "Nie odnaleziono nic w bazie!",
@@ -145,7 +183,14 @@ const DICT: Dict = {
 
   // Article result (hero)
   article_title: { pl: "Twój artykuł", en: "Your article" },
-  article_onair: { pl: "Na podstawie wiadomości z indeksu", en: "Based on indexed news" },
+  article_onair: { pl: "Artykuł przygotowany dla Ciebie", en: "An article prepared for you" },
+  article_topic: { pl: "Temat", en: "Topic" },
+  article_actions_hint: {
+    pl: "Podobało się? Zapisz lub skopiuj artykuł.",
+    en: "Enjoyed it? Save or copy the article.",
+  },
+  tech_details: { pl: "Szczegóły techniczne", en: "Technical details" },
+  back_to_top: { pl: "Wróć na górę", en: "Back to top" },
   article_empty: {
     pl: "Model nie zwrócił treści spróbuje ponownie za chwilę.",
     en: "The model returned no content — please try again in a moment.",
@@ -178,6 +223,10 @@ const DICT: Dict = {
   },
   word_count: { pl: "słów", en: "words" },
   reading_time: { pl: "min czytania", en: "min read" },
+  reading_time_long: {
+    pl: "Przeczytasz w ok. {minutes} min",
+    en: "About {minutes} min read",
+  },
   copy: { pl: "Kopiuj", en: "Copy" },
   copied: { pl: "Skopiowano!", en: "Copied!" },
   download: { pl: "Pobierz .md", en: "Download .md" },
@@ -193,6 +242,10 @@ const DICT: Dict = {
   footer_note: {
     pl: "Puls Informacji by RadLab — aktualne wiadomości na Twój temat",
     en: "Puls Informacji by RadLab — current news on your topic",
+  },
+  footer_disclaimer: {
+    pl: "Artykuły powstają automatycznie na podstawie zebranych wiadomości. Zawsze możesz zajrzeć do źródeł pod tekstem.",
+    en: "Articles are generated automatically from collected news. You can always check the sources below the text.",
   },
   loading_categories: {
     pl: "Ładowanie indeksu źródeł...",

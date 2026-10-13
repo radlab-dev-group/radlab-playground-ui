@@ -125,7 +125,7 @@ export default function CreatorPage() {
 
     // --- search phase ---
     setPhase("searching");
-    setStepLabel(t(lang, "progress_search"));
+    setStepLabel(t(lang, "progress_search_short"));
 
     const searchRes = await searchNews({
       query,
@@ -158,7 +158,7 @@ export default function CreatorPage() {
 
     // --- generation phase ---
     setPhase("generating");
-    setStepLabel(t(lang, "progress_gen"));
+    setStepLabel(t(lang, "progress_gen_short"));
 
     const newsIds = collectNewsIds(searchInCategory);
     const articleType = buildArticlePrompt(lang, style);
@@ -184,22 +184,36 @@ export default function CreatorPage() {
   }
 
   return (
-    <div className="bg-controlroom min-h-screen">
+    <div id="top" className="bg-reading-room min-h-screen">
       <Header lang={lang} onLangChange={setLang} indexReady={!!categories} />
 
-      <main className="mx-auto max-w-4xl space-y-8 px-4 py-8 sm:px-6 sm:py-12">
+      <main className="mx-auto max-w-4xl space-y-8 px-4 py-10 sm:px-6 sm:py-14">
         {!article && (
-          <div className="max-w-2xl">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-teal-700">
+          <section className="animate-fade-up text-center">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-accent-700">
               {t(lang, "intro_eyebrow")}
             </p>
-            <h2 className="font-editorial text-4xl leading-tight tracking-tight text-slate-900 sm:text-5xl">
+            <h2 className="mx-auto max-w-3xl font-editorial text-4xl font-semibold leading-[1.1] tracking-tight text-ink-950 sm:text-6xl">
               {t(lang, "intro_title")}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-500 sm:text-xl">
               {t(lang, "intro_description")}
             </p>
-          </div>
+
+            <ol className="mx-auto mt-8 grid max-w-3xl gap-3 text-left sm:grid-cols-3">
+              {["intro_step_1", "intro_step_2", "intro_step_3"].map((key, idx) => (
+                <li
+                  key={key}
+                  className="flex items-start gap-3 rounded-2xl bg-paper-50/70 px-4 py-3 ring-1 ring-paper-300/70"
+                >
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-700 font-editorial text-sm font-semibold text-white">
+                    {idx + 1}
+                  </span>
+                  <span className="text-sm leading-relaxed text-ink-700">{t(lang, key)}</span>
+                </li>
+              ))}
+            </ol>
+          </section>
         )}
 
         <div className="space-y-6">
@@ -230,7 +244,7 @@ export default function CreatorPage() {
             />
 
             {notice && phase !== "error" && (
-              <div className="animate-fade-up rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
+              <div className="animate-fade-up rounded-2xl border border-sun-200 bg-sun-100 px-5 py-4 text-sm text-sun-700">
                 <div className="mb-1 font-semibold">
                   {t(lang, "notice_title")}
                 </div>
@@ -242,7 +256,7 @@ export default function CreatorPage() {
               <Pipeline lang={lang} phase={phase} stepLabel={stepLabel} />
             )}
 
-            {/* 02 — the article is the hero: it renders first (top) */}
+            {/* The article is the hero: it renders first (top) */}
             {article ? (
               <ArticleResult
                 lang={lang}
@@ -254,7 +268,7 @@ export default function CreatorPage() {
               <ArticleSkeleton lang={lang} label={stepLabel ?? t(lang, "progress_gen")} />
             ) : null}
 
-            {/* 03 — supporting evidence sits below the article */}
+            {/* Supporting evidence sits below the article */}
             {hasMatches && searchResult && (
               <SearchResults
                 lang={lang}
@@ -265,11 +279,25 @@ export default function CreatorPage() {
           </div>
         </div>
 
-        <footer className="border-t border-slate-200 pt-6">
-          <div className="flex flex-col items-start justify-between gap-3 text-xs leading-relaxed text-slate-500 sm:flex-row sm:items-center">
+        {article && (
+          <div className="flex justify-center">
+            <a
+              href="#top"
+              className="rounded-full border border-paper-300 bg-paper-50 px-4 py-2 text-xs font-medium text-ink-500 transition hover:border-accent-200 hover:text-accent-800"
+            >
+              ↑ {t(lang, "back_to_top")}
+            </a>
+          </div>
+        )}
+
+        <footer className="border-t border-paper-300 pt-8">
+          <p className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-ink-500">
+            {t(lang, "footer_disclaimer")}
+          </p>
+          <div className="mt-6 flex flex-col items-center justify-between gap-3 text-xs leading-relaxed text-ink-400 sm:flex-row">
             <span>{t(lang, "footer_note")}</span>
             <span className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600" />
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-600" />
               {t(lang, "index_note")}
             </span>
           </div>

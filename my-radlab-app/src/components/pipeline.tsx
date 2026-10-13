@@ -14,7 +14,7 @@ interface PipelineProps {
 const STEP_KEYS = ["step_query", "step_search", "step_index", "step_gen"];
 
 /**
- * A horizontal "broadcast pipeline" that visualises the RAG flow:
+ * A quiet progress strip that tells the reader where we are:
  * query -> search -> match -> generate.
  */
 export function Pipeline({ lang, phase, stepLabel }: PipelineProps) {
@@ -26,8 +26,8 @@ export function Pipeline({ lang, phase, stepLabel }: PipelineProps) {
     : 0;
 
   return (
-    <div className="panel rounded-2xl px-5 py-4">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <div className="paper-soft rounded-2xl px-5 py-4">
+      <ol className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4">
         {STEP_KEYS.map((key, idx) => {
           const reached = activeIndex >= idx;
           const current =
@@ -35,43 +35,33 @@ export function Pipeline({ lang, phase, stepLabel }: PipelineProps) {
             (idx === 3 && phase === "generating") ||
             (idx === 2 && phase === "generating");
           return (
-            <div key={key} className="flex min-w-0 items-center gap-2">
+            <li key={key} className="flex min-w-0 items-center gap-2.5">
               <div
                 className={cn(
-                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-medium transition-colors",
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold transition-colors",
                   reached
-                    ? "border-teal-200 bg-teal-50 text-teal-800"
-                    : "border-slate-200 bg-slate-50 text-slate-600"
+                    ? "bg-accent-700 text-white"
+                    : "bg-paper-300 text-ink-500",
+                  current && "motion-safe:animate-blink"
                 )}
               >
                 {phase === "done" && reached ? "✓" : idx + 1}
               </div>
-              <div className="min-w-0 flex-1">
-                <div
-                  className={cn(
-                    "text-xs font-medium leading-relaxed transition-colors sm:text-sm",
-                    reached ? "text-teal-800" : "text-slate-600"
-                  )}
-                >
-                  {t(lang, key)}
-                </div>
-                <div aria-hidden="true" className="mt-1 h-0.5 w-full overflow-hidden rounded bg-slate-200">
-                  <div
-                    className={cn(
-                      "h-full rounded bg-teal-600 transition-all duration-700",
-                      current ? "w-full motion-safe:animate-pulse" : reached ? "w-full" : "w-0"
-                    )}
-                  />
-                </div>
-              </div>
-            </div>
+              <span
+                className={cn(
+                  "truncate text-sm transition-colors",
+                  reached ? "font-medium text-ink-900" : "text-ink-400"
+                )}
+              >
+                {t(lang, key)}
+              </span>
+            </li>
           );
         })}
-      </div>
+      </ol>
       {stepLabel && (
-        <div role="status" className="mt-3 flex items-start gap-2 text-sm text-teal-700">
-          <span aria-hidden="true" className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-600" />
-          <span className="min-w-0 break-words">{stepLabel}</span>
+        <div role="status" className="mt-3 border-t border-paper-300 pt-3 text-sm leading-relaxed text-accent-800">
+          {stepLabel}
         </div>
       )}
     </div>

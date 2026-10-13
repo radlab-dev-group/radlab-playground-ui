@@ -24,7 +24,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
 
     if (token.startsWith("**")) {
       nodes.push(
-        <strong key={key} className="font-semibold text-slate-900">
+        <strong key={key} className="font-semibold text-ink-950">
           {token.slice(2, -2)}
         </strong>
       );
@@ -32,14 +32,14 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
       nodes.push(
         <code
           key={key}
-          className="rounded bg-slate-100 px-1 py-0.5 font-mono text-[0.9em] text-teal-800"
+          className="rounded bg-paper-200 px-1 py-0.5 font-mono text-[0.85em] text-accent-800"
         >
           {token.slice(1, -1)}
         </code>
       );
     } else {
       nodes.push(
-        <em key={key} className="italic text-slate-700">
+        <em key={key} className="italic">
           {token.slice(1, -1)}
         </em>
       );
@@ -82,7 +82,7 @@ export function renderMarkdown(text: string): ReactNode[] {
     if (!paragraph.length) return;
     const content = paragraph.join(" ");
     blocks.push(
-      <p key={`p-${key++}`} className="mb-5 text-[17px] leading-[1.85] text-slate-700">
+      <p key={`p-${key++}`} className="mb-6">
         {renderInline(content, `p-${key}`)}
       </p>
     );
@@ -96,17 +96,16 @@ export function renderMarkdown(text: string): ReactNode[] {
     blocks.push(
       <ul
         key={`l-${key++}`}
-        className="mb-6 space-y-3 border-l-2 border-teal-200 pl-5"
+        className="mb-7 space-y-3 border-l-2 border-accent-200 pl-5"
       >
         {items.map((item, idx) => (
-          <li
-            key={`li-${idx}`}
-            className="text-[17px] leading-[1.85] text-slate-700"
-          >
-            <span className="mr-2 text-sm text-teal-700">
-              {ordered ? String(idx + 1).padStart(2, "0") : "▸"}
+          <li key={`li-${idx}`} className="flex gap-3">
+            <span className="mt-[0.35em] shrink-0 font-sans text-sm font-semibold text-accent-700">
+              {ordered ? `${idx + 1}.` : "•"}
             </span>
-            {renderInline(item.replace(/^(\*|-|\d+[.)])\s+/, ""), `li-${idx}`)}
+            <span className="min-w-0 flex-1">
+              {renderInline(item.replace(/^(\*|-|\d+[.)])\s+/, ""), `li-${idx}`)}
+            </span>
           </li>
         ))}
       </ul>
@@ -127,7 +126,11 @@ export function renderMarkdown(text: string): ReactNode[] {
       flushList();
       flushParagraph();
       blocks.push(
-        <div key={`hr-${key++}`} className="hairline my-6 h-px w-full" />
+        <div key={`hr-${key++}`} className="my-10 flex justify-center gap-3 text-accent-600" aria-hidden="true">
+          <span>✧</span>
+          <span>✧</span>
+          <span>✧</span>
+        </div>
       );
       continue;
     }
@@ -142,7 +145,7 @@ export function renderMarkdown(text: string): ReactNode[] {
         blocks.push(
           <h3
             key={`h-${key++}`}
-            className="mt-9 mb-4 font-editorial text-2xl font-semibold tracking-tight text-slate-900"
+            className="mb-4 mt-12 text-[1.75rem] font-semibold leading-snug tracking-tight text-ink-950 sm:text-3xl"
           >
             {content}
           </h3>
@@ -151,7 +154,7 @@ export function renderMarkdown(text: string): ReactNode[] {
         blocks.push(
           <h4
             key={`h-${key++}`}
-            className="mt-7 mb-3 text-lg font-semibold text-slate-900"
+            className="mb-3 mt-9 text-xl font-semibold leading-snug text-ink-950 sm:text-2xl"
           >
             {content}
           </h4>
